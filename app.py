@@ -62,12 +62,12 @@ def recommend():
     if not conditions:
         return jsonify({"error": "No valid nutrient deficiencies provided"}), 400
 
-    where_clause = " AND ".join(conditions)
-    select_clause = ", ".join(['description'] + deficiencies)
+    whereClause = " AND ".join(conditions)
+    selectClause = ", ".join(['description'] + deficiencies)
     query = f"""
-        SELECT {select_clause}
+        SELECT {selectClause}
         FROM {table}
-        WHERE {where_clause}
+        WHERE {whereClause}
         ORDER BY {deficiencies[0]} DESC
         LIMIT 5;
     """
