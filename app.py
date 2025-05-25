@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, request
+from classifier import loadModel, classify
 import boto3
 import time
 import csv
 import os
+
+model = loadModel()
 
 app = Flask(__name__)
 
@@ -34,7 +37,6 @@ def athenaQuery(query):
     if state != 'SUCCEEDED':
         return []
 
-    # Download the CSV from S3
     s3 = boto3.client('s3')
     bucket = "nutrition-chatbot-dev"
     key = f"athena-results/{queryID}.csv"
@@ -73,6 +75,8 @@ def recommend():
     """
 
     results = athenaQuery(query)
+    for meal in results:
+        meal['classification'] = classify(meal, model)
     return jsonify({"recommendations": results})
 
 if __name__ == '__main__':
