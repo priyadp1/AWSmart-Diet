@@ -65,7 +65,6 @@ def main():
 
     train(model, dataloader, device, epochs=args.epochs)
 
-    # Save the model
     torch.save(model.state_dict(), os.path.join(args.model_dir, "model.pth"))
 
 if __name__ == '__main__':
