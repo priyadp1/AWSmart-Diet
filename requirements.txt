@@ -1,0 +1,6 @@
+flask
+flask-cors
+pandas>=1.5
+torch>=2.1
+transformers>=4.34
+boto3
